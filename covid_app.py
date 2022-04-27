@@ -41,6 +41,8 @@ def plot_daily_deaths(data, start_date, end_date, states):
             color="Black"
         )
     )
+    fig.update_xaxes(ticks="outside", tickwidth=2, tickcolor='crimson', ticklen=10)
+    fig.update_yaxes(ticks="outside", tickwidth=2, tickcolor='crimson', ticklen=10)
     fig.update_layout(legend=dict(yanchor="top", y=1.3, xanchor="left", x=0.8))
     st.plotly_chart(fig, use_container_width=True)
 
@@ -64,6 +66,8 @@ def plot_daily_vaccines(data, start_date, end_date, states):
             color="Black"
         )
     )
+    fig.update_xaxes(ticks="outside", tickwidth=2, tickcolor='crimson', ticklen=10)
+    fig.update_yaxes(ticks="outside", tickwidth=2, tickcolor='crimson', ticklen=10)
     fig.update_layout(legend=dict(yanchor="top", y=1.3, xanchor="left", x=0.8))
     st.plotly_chart(fig, use_container_width=True)
 
