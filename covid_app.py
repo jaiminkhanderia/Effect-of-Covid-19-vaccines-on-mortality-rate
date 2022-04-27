@@ -30,6 +30,17 @@ def plot_daily_deaths(data, start_date, end_date, states):
         x = state_data["date"]
         y = state_data["daily_deaths"]
         fig.add_trace(go.Scatter(x=x, y=y, mode='lines+markers', name=state))
+    fig.update_layout(
+        title="US States - Daily Deaths",
+        xaxis_title="Date",
+        yaxis_title="Daily death count",
+        legend_title="State",
+        font=dict(
+            family="Courier New, monospace",
+            size=12,
+            color="Black"
+        )
+    )
     st.plotly_chart(fig, use_container_width=True)
 
 
@@ -41,6 +52,17 @@ def plot_daily_vaccines(data, start_date, end_date, states):
         x = state_data["date"]
         y = state_data["daily_fully_vaccinated"]
         fig.add_trace(go.Scatter(x=x, y=y, mode='lines+markers', name=state))
+    fig.update_layout(
+        title="US States - Daily Vaccines",
+        xaxis_title="Date",
+        yaxis_title="Daily fully vaccinated count",
+        legend_title="State",
+        font=dict(
+            family="Courier New, monospace",
+            size=12,
+            color="Black"
+        )
+    )
     st.plotly_chart(fig, use_container_width=True)
 
 
