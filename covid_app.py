@@ -41,6 +41,7 @@ def plot_daily_deaths(data, start_date, end_date, states):
             color="Black"
         )
     )
+    fig.update_layout(legend=dict(yanchor="top", y=1.3, xanchor="left", x=0.8))
     st.plotly_chart(fig, use_container_width=True)
 
 
@@ -63,6 +64,7 @@ def plot_daily_vaccines(data, start_date, end_date, states):
             color="Black"
         )
     )
+    fig.update_layout(legend=dict(yanchor="top", y=1.3, xanchor="left", x=0.8))
     st.plotly_chart(fig, use_container_width=True)
 
 
@@ -76,6 +78,21 @@ def plot_daily_deaths_vaccines(data, start_date, end_date, state):
     fig = make_subplots(specs=[[{"secondary_y": True}]])
     fig.add_trace(go.Scatter(x=x, y=y1, mode='lines+markers', name="Deaths"), secondary_y=False)
     fig.add_trace(go.Scatter(x=x, y=y2, mode='lines+markers', name="Fully Vaccinated"), secondary_y=True)
+    fig.update_layout(
+        title="US States - Daily Deaths and Vaccines",
+        xaxis_title="Date",
+        legend_title=state,
+        font=dict(
+            family="Courier New, monospace",
+            size=12,
+            color="Black"
+        )
+    )
+    fig.update_layout(legend=dict(yanchor="top", y=1.3, xanchor="left", x=0.8))
+    fig.update_xaxes(ticks="outside", tickwidth=2, tickcolor='crimson', ticklen=10)
+    fig.update_yaxes(ticks="outside", tickwidth=2, tickcolor='crimson', ticklen=10, col=1)
+    fig.update_yaxes(title_text="Daily death count", secondary_y=False)
+    fig.update_yaxes(title_text="Daily fully vaccinated count", secondary_y=True)
     st.plotly_chart(fig, use_container_width=True)
 
 
@@ -88,6 +105,21 @@ def plot_variant_daily_deaths_vaccines(data, state, variant):
     fig = make_subplots(specs=[[{"secondary_y": True}]])
     fig.add_trace(go.Scatter(x=x, y=y1, mode='lines+markers', name="Deaths"), secondary_y=False)
     fig.add_trace(go.Scatter(x=x, y=y2, mode='lines+markers', name="Fully Vaccinated"), secondary_y=True)
+    fig.update_layout(
+        title="US States - Variant Analysis",
+        xaxis_title="Date",
+        legend_title=state,
+        font=dict(
+            family="Courier New, monospace",
+            size=12,
+            color="Black"
+        )
+    )
+    fig.update_layout(legend=dict(yanchor="top", y=1.3, xanchor="left", x=0.8))
+    fig.update_xaxes(ticks="outside", tickwidth=2, tickcolor='crimson', ticklen=10)
+    fig.update_yaxes(ticks="outside", tickwidth=2, tickcolor='crimson', ticklen=10, col=1)
+    fig.update_yaxes(title_text="Daily death count", secondary_y=False)
+    fig.update_yaxes(title_text="Daily fully vaccinated count", secondary_y=True)
     st.plotly_chart(fig, use_container_width=True)
 
 
