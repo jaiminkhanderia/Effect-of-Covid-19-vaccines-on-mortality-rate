@@ -136,17 +136,21 @@ def main():
     if option == "Introduction":
         st.write(covid_data.head(10))
     elif option == "US States - Deaths":
-        states = st.multiselect("Choose state/s", options=all_states, default=["California", "New York"])
-        start_date, end_date = st.slider("Date", value=(covid_data["date"][0], covid_data["date"][len(covid_data) - 1]))
+        states = st.multiselect("Choose state/s", options=all_states, default=["California", "New York"], key="deaths")
+        start_date, end_date = st.slider("Date", value=(covid_data["date"][0], covid_data["date"][len(covid_data) - 1]),
+                                         key="deaths")
         plot_daily_deaths(covid_data, start_date, end_date, states)
     elif option == "US States - Vaccines":
-        states = st.multiselect("Choose state/s", options=all_states, default=["California", "New York"])
-        start_date, end_date = st.slider("Date", value=(covid_data["date"][0], covid_data["date"][len(covid_data) - 1]))
+        states = st.multiselect("Choose state/s", options=all_states, default=["California", "New York"],
+                                key="vaccines")
+        start_date, end_date = st.slider("Date", value=(covid_data["date"][0], covid_data["date"][len(covid_data) - 1]),
+                                         key="vaccines")
         plot_daily_vaccines(covid_data, start_date, end_date, states)
     elif option == "US State - Deaths and Vaccines":
         min_date, max_date = covid_data["date"][0], covid_data["date"][len(covid_data) - 1]
-        state = st.selectbox("Choose state", options=all_states, index=0)
-        start_date, end_date = st.slider("Dates", min_value=min_date, max_value=max_date, value=(min_date, max_date))
+        state = st.selectbox("Choose state", options=all_states, index=0, key="deaths_vaccines")
+        start_date, end_date = st.slider("Dates", min_value=min_date, max_value=max_date, value=(min_date, max_date),
+                                         key="deaths_vaccines")
         plot_daily_deaths_vaccines(covid_data, start_date, end_date, state)
     elif option == "US State - Variant":
         state = st.selectbox("Choose state", options=all_states, index=5)
