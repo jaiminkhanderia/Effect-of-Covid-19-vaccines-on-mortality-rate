@@ -7,7 +7,8 @@ from plots import plot_daily_deaths, plot_daily_vaccines, plot_daily_deaths_vacc
 
 @st.cache
 def load_data():
-    data = pd.read_csv("../data/us_covid19_vaccine_cases_deaths_daily_count_variant.csv")
+    data = pd.read_csv(
+        "https://github.com/aanchal22/DAVH_Covid-19/blob/main/data/us_covid19_vaccine_cases_deaths_daily_count_variant.csv")
     data["date"] = pd.to_datetime(data["date"]).dt.date
     return data
 
