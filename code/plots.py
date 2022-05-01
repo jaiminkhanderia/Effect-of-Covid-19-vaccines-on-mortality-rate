@@ -135,3 +135,113 @@ def plot_variant_daily_deaths_vaccines(data, state, variant):
     fig.update_yaxes(title_text="Daily death count", secondary_y=False)
     fig.update_yaxes(title_text="Daily fully vaccinated count", secondary_y=True)
     st.plotly_chart(fig, use_container_width=True)
+
+
+def plot_adult_hospitalizations_vaccinations(data):
+    x = data["Week ending"]
+    y1 = data["Rate in unvaccinated"]
+    y2 = data["Rate in fully vaccinated"]
+
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=x, y=y1, mode='lines+markers', name='Rate in unvaccinated people'))
+    fig.add_trace(go.Scatter(x=x, y=y2, mode='lines+markers', name='Rate in fully vaccinated people'))
+    fig.update_layout(
+        title="Age-Adjusted Rates of COVID-19-Associated Hospitalizations by Vaccination Status in Adults Ages ≥18 Years",
+        title_y=0.95,
+        xaxis_title="Date",
+        font=dict(
+            family="Courier New, monospace",
+            size=12,
+            color="Black"
+        )
+    )
+    fig.update_layout(legend=dict(yanchor="top", y=1.23, xanchor="left", x=0.7))
+    fig.update_xaxes(title_text="Date (Weekly)", ticks="outside", tickwidth=2, tickcolor='crimson', ticklen=10)
+    fig.update_yaxes(title_text="Rate per 10000 populations", ticks="outside", tickwidth=2, tickcolor='crimson',
+                     ticklen=10)
+    st.plotly_chart(fig, use_container_width=True)
+
+
+def plot_age_group_hospitalizations_vaccinations(data, age_group):
+    data = data[data["Age group"] == age_group]
+    x = data["Week ending"]
+    y1 = data["Rate in unvaccinated"]
+    y2 = data["Rate in fully vaccinated"]
+
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=x, y=y1, mode='lines+markers', name='Rate in unvaccinated people'))
+    fig.add_trace(go.Scatter(x=x, y=y2, mode='lines+markers', name='Rate in fully vaccinated people'))
+    fig.update_layout(
+        title="Rates of COVID-19-Associated Hospitalizations by Vaccination Status for Age group: {}".format(age_group),
+        title_y=0.95,
+        xaxis_title="Date",
+        font=dict(
+            family="Courier New, monospace",
+            size=12,
+            color="Black"
+        )
+    )
+    fig.update_layout(legend=dict(yanchor="top", y=1.23, xanchor="left", x=0.7))
+    fig.update_xaxes(title_text="Date (Weekly)", ticks="outside", tickwidth=2, tickcolor='crimson', ticklen=10)
+    fig.update_yaxes(title_text="Rate per 10000 populations", ticks="outside", tickwidth=2, tickcolor='crimson',
+                     ticklen=10)
+    st.plotly_chart(fig, use_container_width=True)
+
+
+def plot_booster_adult_hospitalizations_vaccinations(data):
+    x = data["Week ending"]
+    y1 = data["Rate in unvaccinated"]
+    y2 = data["Rate in fully vaccinated without additional or booster"]
+    y3 = data["Rate in fully vaccinated with additional or booster"]
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=x, y=y1, mode='lines+markers', line_color='#EF553B', name='Rate in unvaccinated'))
+    fig.add_trace(go.Scatter(x=x, y=y2, mode='lines+markers', line_color='#636EFA',
+                             name='Rate in fully vaccinated without additional or booster'))
+    fig.add_trace(go.Scatter(x=x, y=y3, mode='lines+markers', line_color='#00CC96',
+                             name='Rate in fully vaccinated with additional or booster'))
+
+    fig.update_layout(
+        title="Age-Adjusted Rates of COVID-19-Associated Hospitalizations by Vaccination Status in Adults Ages ≥18 Years",
+        title_y=1,
+        xaxis_title="Date",
+        font=dict(
+            family="Courier New, monospace",
+            size=12,
+            color="Black"
+        )
+    )
+    fig.update_layout(legend=dict(yanchor="top", y=1.3, xanchor="left", x=0.52))
+    fig.update_xaxes(title_text="Date (Weekly)", ticks="outside", tickwidth=2, tickcolor='crimson', ticklen=10)
+    fig.update_yaxes(title_text="Rate per 10000 populations", ticks="outside", tickwidth=2, tickcolor='crimson',
+                     ticklen=10)
+    st.plotly_chart(fig, use_container_width=True)
+
+
+def plot_booster_age_group_hospitalizations_vaccinations(data, age_group):
+    data = data[data["Age group"] == age_group]
+    x = data["Week ending"]
+    y1 = data["Rate in unvaccinated"]
+    y2 = data["Rate in fully vaccinated without additional or booster"]
+    y3 = data["Rate in fully vaccinated with additional or booster"]
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=x, y=y1, mode='lines+markers', line_color='#EF553B', name='Rate in unvaccinated'))
+    fig.add_trace(go.Scatter(x=x, y=y2, mode='lines+markers', line_color='#636EFA',
+                             name='Rate in fully vaccinated without additional or booster'))
+    fig.add_trace(go.Scatter(x=x, y=y3, mode='lines+markers', line_color='#00CC96',
+                             name='Rate in fully vaccinated with additional or booster'))
+
+    fig.update_layout(
+        title="Rates of COVID-19-Associated Hospitalizations by Vaccination Status for Age group: {}".format(age_group),
+        title_y=1,
+        xaxis_title="Date",
+        font=dict(
+            family="Courier New, monospace",
+            size=12,
+            color="Black"
+        )
+    )
+    fig.update_layout(legend=dict(yanchor="top", y=1.3, xanchor="left", x=0.52))
+    fig.update_xaxes(title_text="Date (Weekly)", ticks="outside", tickwidth=2, tickcolor='crimson', ticklen=10)
+    fig.update_yaxes(title_text="Rate per 10000 populations", ticks="outside", tickwidth=2, tickcolor='crimson',
+                     ticklen=10)
+    st.plotly_chart(fig, use_container_width=True)
