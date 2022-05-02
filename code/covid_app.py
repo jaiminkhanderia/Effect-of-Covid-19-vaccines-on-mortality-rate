@@ -1,3 +1,4 @@
+import datetime
 import pandas as pd
 import streamlit as st
 
@@ -107,7 +108,7 @@ def main():
     age_groups_hosp = get_all_age_groups_hospitalizations(hosp_vac_data_2)
 
     if option == "Introduction":
-        st.write(covid_data.head(10))
+        st.write(covid_data[covid_data['date'] == datetime.date(year=2021, month=4, day =21)].head(10))
     elif option == "US States - Daily Deaths":
         states = st.multiselect("Choose state/s", options=all_states, default=["California", "New York"], key="deaths")
         start_date, end_date = st.slider("Date", value=(covid_data["date"][0], covid_data["date"][len(covid_data) - 1]),
