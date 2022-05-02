@@ -157,7 +157,7 @@ def plot_adult_hospitalizations_vaccinations(data):
     )
     fig.update_layout(legend=dict(yanchor="top", y=1.23, xanchor="left", x=0.7))
     fig.update_xaxes(title_text="Date (Weekly)", ticks="outside", tickwidth=2, tickcolor='crimson', ticklen=10)
-    fig.update_yaxes(title_text="Rate per 10000 populations", ticks="outside", tickwidth=2, tickcolor='crimson',
+    fig.update_yaxes(title_text="Rate per 100000 populations", ticks="outside", tickwidth=2, tickcolor='crimson',
                      ticklen=10)
     st.plotly_chart(fig, use_container_width=True)
 
@@ -183,7 +183,7 @@ def plot_age_group_hospitalizations_vaccinations(data, age_group):
     )
     fig.update_layout(legend=dict(yanchor="top", y=1.23, xanchor="left", x=0.7))
     fig.update_xaxes(title_text="Date (Weekly)", ticks="outside", tickwidth=2, tickcolor='crimson', ticklen=10)
-    fig.update_yaxes(title_text="Rate per 10000 populations", ticks="outside", tickwidth=2, tickcolor='crimson',
+    fig.update_yaxes(title_text="Rate per 100000 populations", ticks="outside", tickwidth=2, tickcolor='crimson',
                      ticklen=10)
     st.plotly_chart(fig, use_container_width=True)
 
@@ -212,7 +212,7 @@ def plot_booster_adult_hospitalizations_vaccinations(data):
     )
     fig.update_layout(legend=dict(yanchor="top", y=1.3, xanchor="left", x=0.52))
     fig.update_xaxes(title_text="Date (Weekly)", ticks="outside", tickwidth=2, tickcolor='crimson', ticklen=10)
-    fig.update_yaxes(title_text="Rate per 10000 populations", ticks="outside", tickwidth=2, tickcolor='crimson',
+    fig.update_yaxes(title_text="Rate per 100000 populations", ticks="outside", tickwidth=2, tickcolor='crimson',
                      ticklen=10)
     st.plotly_chart(fig, use_container_width=True)
 
@@ -242,6 +242,194 @@ def plot_booster_age_group_hospitalizations_vaccinations(data, age_group):
     )
     fig.update_layout(legend=dict(yanchor="top", y=1.3, xanchor="left", x=0.52))
     fig.update_xaxes(title_text="Date (Weekly)", ticks="outside", tickwidth=2, tickcolor='crimson', ticklen=10)
-    fig.update_yaxes(title_text="Rate per 10000 populations", ticks="outside", tickwidth=2, tickcolor='crimson',
+    fig.update_yaxes(title_text="Rate per 100000 populations", ticks="outside", tickwidth=2, tickcolor='crimson',
+                     ticklen=10)
+    st.plotly_chart(fig, use_container_width=True)
+
+
+def plot_overall_cases_vaccinations(data, title_choice):
+    choice = "case" if title_choice == "Cases" else "death"
+    data = data[np.logical_and(data["outcome"] == choice,
+                               np.logical_and(data["Age group"] == "all_ages_adj",
+                                              data["Vaccine product"] == "all_types"))]
+    x = data["date"]
+    y1 = data["Age adjusted unvax IR"]
+    y2 = data["Age adjusted vax IR"]
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=x, y=y1, mode='lines+markers', line_color='#EF553B', name='Unvaccinated'))
+    fig.add_trace(go.Scatter(x=x, y=y2, mode='lines+markers', line_color='#636EFA',
+                             name='Vaccinated with atleast a primary series'))
+
+    fig.update_layout(
+        title="Rates of COVID-19 {} by Vaccination Status".format(title_choice),
+        title_y=1,
+        xaxis_title="Date",
+        font=dict(
+            family="Courier New, monospace",
+            size=12,
+            color="Black"
+        )
+    )
+    fig.update_layout(legend=dict(yanchor="top", y=1.3, xanchor="left", x=0.55))
+    fig.update_xaxes(title_text="Date (Weekly)", ticks="outside", tickwidth=2, tickcolor='crimson', ticklen=10)
+    fig.update_yaxes(title_text="Incidence per 100000 populations", ticks="outside", tickwidth=2, tickcolor='crimson',
+                     ticklen=10)
+    st.plotly_chart(fig, use_container_width=True)
+
+
+def plot_age_group_cases_vaccinations(data, title_choice, age_group):
+    choice = "case" if title_choice == "Cases" else "death"
+    data = data[np.logical_and(data["outcome"] == choice,
+                               np.logical_and(data["Age group"] == age_group, data["Vaccine product"] == "all_types"))]
+    x = data["date"]
+    y1 = data["Crude unvax IR"]
+    y2 = data["Crude vax IR"]
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=x, y=y1, mode='lines+markers', line_color='#EF553B', name='Unvaccinated'))
+    fig.add_trace(go.Scatter(x=x, y=y2, mode='lines+markers', line_color='#636EFA',
+                             name='Vaccinated with a primary series'))
+
+    fig.update_layout(
+        title="Rates of COVID-19 {} by Vaccination Status for Age Group: {}".format(title_choice, age_group),
+        title_y=1,
+        xaxis_title="Date",
+        font=dict(
+            family="Courier New, monospace",
+            size=12,
+            color="Black"
+        )
+    )
+    fig.update_layout(legend=dict(yanchor="top", y=1.3, xanchor="left", x=0.55))
+    fig.update_xaxes(title_text="Date (Weekly)", ticks="outside", tickwidth=2, tickcolor='crimson', ticklen=10)
+    fig.update_yaxes(title_text="Incidence per 100000 populations", ticks="outside", tickwidth=2, tickcolor='crimson',
+                     ticklen=10)
+    st.plotly_chart(fig, use_container_width=True)
+
+
+def plot_vaccine_cases_vaccinations(data, title_choice):
+    choice = "case" if title_choice == "Cases" else "death"
+    data = data[np.logical_and(data["outcome"] == choice, data["Age group"] == "all_ages_adj")]
+    x = data["date"].unique().tolist()
+    y1 = data[data["Vaccine product"] == "all_types"]["Age adjusted unvax IR"]
+    y2 = data[data["Vaccine product"] == "Janssen"]["Age adjusted vax IR"]
+    y3 = data[data["Vaccine product"] == "Moderna"]["Age adjusted vax IR"]
+    y4 = data[data["Vaccine product"] == "Pfizer"]["Age adjusted vax IR"]
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=x, y=y1, mode='lines+markers', line_color='#000000', name='Unvaccinated'))
+    fig.add_trace(go.Scatter(x=x, y=y2, mode='lines+markers', line_color='#EF553B', name='Janssen'))
+    fig.add_trace(go.Scatter(x=x, y=y3, mode='lines+markers', line_color='#636EFA', name='Moderna'))
+    fig.add_trace(go.Scatter(x=x, y=y4, mode='lines+markers', line_color='#00CC96', name='Pfizer'))
+
+    fig.update_layout(
+        title="Rates of COVID-19 {} by Vaccination Status for all vaccine types".format(title_choice),
+        title_y=1,
+        xaxis_title="Date",
+        font=dict(
+            family="Courier New, monospace",
+            size=12,
+            color="Black"
+        )
+    )
+    fig.update_layout(legend=dict(yanchor="top", y=1.34, xanchor="left", x=0.84))
+    fig.update_xaxes(title_text="Date (Weekly)", ticks="outside", tickwidth=2, tickcolor='crimson', ticklen=10)
+    fig.update_yaxes(title_text="Incidence per 100000 populations", ticks="outside", tickwidth=2, tickcolor='crimson',
+                     ticklen=10)
+    st.plotly_chart(fig, use_container_width=True)
+
+
+def plot_overall_cases_vaccinations_booster(data, title_choice):
+    choice = "case" if title_choice == "Cases" else "death"
+    data = data[np.logical_and(data["outcome"] == choice,
+                               np.logical_and(data["age_group"] == "all_ages", data["vaccine_product"] == "all_types"))]
+    x = data["date"]
+    y1 = data["age_adj_unvax_ir"]
+    y2 = data["age_adj_vax_ir"]
+    y3 = data["age_adj_booster_ir"]
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=x, y=y1, mode='lines+markers', line_color='#EF553B', name='Unvaccinated'))
+    fig.add_trace(go.Scatter(x=x, y=y2, mode='lines+markers', line_color='#636EFA',
+                             name='Vaccinated with a primary series only'))
+    fig.add_trace(go.Scatter(x=x, y=y3, mode='lines+markers', line_color='#00CC96',
+                             name='Vaccinated with a primary series and booster dose'))
+
+    fig.update_layout(
+        title="Rates of COVID-19 {} by Vaccination Status and Booster Dose".format(title_choice),
+        title_y=1,
+        xaxis_title="Date",
+        font=dict(
+            family="Courier New, monospace",
+            size=12,
+            color="Black"
+        )
+    )
+    fig.update_layout(legend=dict(yanchor="top", y=1.3, xanchor="left", x=0.55))
+    fig.update_xaxes(title_text="Date (Weekly)", ticks="outside", tickwidth=2, tickcolor='crimson', ticklen=10)
+    fig.update_yaxes(title_text="Incidence per 100000 populations", ticks="outside", tickwidth=2, tickcolor='crimson',
+                     ticklen=10)
+    st.plotly_chart(fig, use_container_width=True)
+
+
+def plot_age_group_cases_vaccinations_booster(data, title_choice, age_group):
+    choice = "case" if title_choice == "Cases" else "death"
+    data = data[np.logical_and(data["outcome"] == choice,
+                               np.logical_and(data["age_group"] == age_group, data["vaccine_product"] == "all_types"))]
+    x = data["date"]
+    y1 = data["crude_unvax_ir"]
+    y2 = data["crude_primary_series_only_ir"]
+    y3 = data["crude_booster_ir"]
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=x, y=y1, mode='lines+markers', line_color='#EF553B', name='Unvaccinated'))
+    fig.add_trace(go.Scatter(x=x, y=y2, mode='lines+markers', line_color='#636EFA',
+                             name='Vaccinated with a primary series only'))
+    fig.add_trace(go.Scatter(x=x, y=y3, mode='lines+markers', line_color='#00CC96',
+                             name='Vaccinated with a primary series and booster dose'))
+
+    fig.update_layout(
+        title="Rates of COVID-19 {} by Vaccination Status and Booster Dose for Age Group: {}".format(title_choice,
+                                                                                                     age_group),
+        title_y=1,
+        xaxis_title="Date",
+        font=dict(
+            family="Courier New, monospace",
+            size=12,
+            color="Black"
+        )
+    )
+    fig.update_layout(legend=dict(yanchor="top", y=1.3, xanchor="left", x=0.55))
+    fig.update_xaxes(title_text="Date (Weekly)", ticks="outside", tickwidth=2, tickcolor='crimson', ticklen=10)
+    fig.update_yaxes(title_text="Incidence per 100000 populations", ticks="outside", tickwidth=2, tickcolor='crimson',
+                     ticklen=10)
+    st.plotly_chart(fig, use_container_width=True)
+
+
+def plot_vaccine_cases_vaccinations_booster(data, title_choice, vaccine):
+    choice = "case" if title_choice == "Cases" else "death"
+    data = data[np.logical_and(data["outcome"] == choice,
+                               np.logical_and(data["age_group"] == "all_ages", data["vaccine_product"] == vaccine))]
+    x = data["date"]
+    y1 = data["age_adj_unvax_ir"]
+    y2 = data["age_adj_vax_ir"]
+    y3 = data["age_adj_booster_ir"]
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=x, y=y1, mode='lines+markers', line_color='#EF553B', name='Unvaccinated'))
+    fig.add_trace(go.Scatter(x=x, y=y2, mode='lines+markers', line_color='#636EFA',
+                             name='Vaccinated with a primary series only'))
+    fig.add_trace(go.Scatter(x=x, y=y3, mode='lines+markers', line_color='#00CC96',
+                             name='Vaccinated with a primary series and booster dose'))
+
+    fig.update_layout(
+        title="Rates of COVID-19 {} by Vaccination Status and Booster Dose for Vaccine: {}".format(title_choice,
+                                                                                                   vaccine),
+        title_y=1,
+        xaxis_title="Date",
+        font=dict(
+            family="Courier New, monospace",
+            size=12,
+            color="Black"
+        )
+    )
+    fig.update_layout(legend=dict(yanchor="top", y=1.3, xanchor="left", x=0.55))
+    fig.update_xaxes(title_text="Date (Weekly)", ticks="outside", tickwidth=2, tickcolor='crimson', ticklen=10)
+    fig.update_yaxes(title_text="Incidence per 100000 populations", ticks="outside", tickwidth=2, tickcolor='crimson',
                      ticklen=10)
     st.plotly_chart(fig, use_container_width=True)
