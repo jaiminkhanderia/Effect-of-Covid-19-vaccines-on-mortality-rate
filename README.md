@@ -1,4 +1,5 @@
-# DAVH_Covid-19
+# Effects of COVID-19 Vaccines on Mortality Rate
+
 This application shows different visualizations for Covid-19 deaths and vaccine data.
 
 The following are the visualizations that are present in the application:
@@ -20,3 +21,8 @@ The application has been written, compiled and tested using Python 3.8 and will 
 
 ## Running the application
 Run the file `covid_app.py` with Python3 by issuing the command `streamlit run covid_app.py`.
+
+## Accessing the deployed application
+Link: https://share.streamlit.io/aanchal22/davh_covid-19/main/code/covid_app.py
+
+Note: You will have to create an account on https://share.streamlit.io first to access the application.
