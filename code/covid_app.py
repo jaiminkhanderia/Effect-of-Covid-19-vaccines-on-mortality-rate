@@ -1,4 +1,3 @@
-import datetime
 import pandas as pd
 import streamlit as st
 
@@ -84,7 +83,7 @@ def get_all_vaccine_types():
 
 def main():
     st.markdown("# Covid-19 Deaths and Vaccine Data")
-    st.write("This app shows different visualizations for Covid-19 deaths and vaccine data")
+    st.write("This applications shows different visualizations for Covid-19 deaths and vaccine data")
 
     option = st.sidebar.selectbox("Plots",
                                   options=["Introduction", "US - Cases, Deaths and Vaccines",
@@ -94,6 +93,7 @@ def main():
                                            "US States - Daily Deaths", "US States - Daily Vaccines",
                                            "US State - Daily Deaths and Vaccines",
                                            "US State - Overall Deaths and Vaccines", "US State - Variant",
+                                           "Thank you!"
                                            ], index=0)
     covid_data = load_data()
     all_states = get_all_states(covid_data)
@@ -108,7 +108,13 @@ def main():
     age_groups_hosp = get_all_age_groups_hospitalizations(hosp_vac_data_2)
 
     if option == "Introduction":
-        st.write(covid_data[covid_data['date'] == datetime.date(year=2021, month=4, day =21)].head(10))
+        st.write("")
+        st.write("")
+        st.write("The following are the visualizations that are present in the application:")
+        st.write("- Cases and Deaths w.r.t vaccinations across the US (country level)")
+        st.write("- Hospitalizations w.r.t vaccinations across the US (country level)")
+        st.write("- Cases and Deaths w.r.t vaccinations for all states in the US")
+        st.write("- Cases and Deaths w.r.t vaccinations during different variants of COVID-19 for all states in the US")
     elif option == "US States - Daily Deaths":
         states = st.multiselect("Choose state/s", options=all_states, default=["California", "New York"], key="deaths")
         start_date, end_date = st.slider("Date", value=(covid_data["date"][0], covid_data["date"][len(covid_data) - 1]),
@@ -190,6 +196,11 @@ def main():
             vaccine = st.selectbox("Choose vaccine type", options=vacc_types, index=2,
                                    key="vac_cases_deaths_vaccines_booster")
             plot_vaccine_cases_vaccinations_booster(cas_dth_vac_data_2, cd_choice, vaccine)
+    elif option == "Thank you!":
+        st.write("")
+        st.markdown("<h1 style='text-align: center; color: #636EFA;'>Thank you!</h1>", unsafe_allow_html=True)
+        st.snow()
+        st.balloons()
 
 
 if __name__ == "__main__":
