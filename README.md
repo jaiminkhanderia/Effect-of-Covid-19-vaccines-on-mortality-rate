@@ -1,5 +1,10 @@
 # Effects of COVID-19 Vaccines on Mortality Rate
 
+Team members:
+- Aanchal Khandelwal (ak8257)
+- Jaimin Dineshbhai Khanderia (jk7178)
+- Ruchika Upadhyay (ru2025)
+
 This application shows different visualizations for Covid-19 deaths and vaccine data.
 
 The following are the visualizations that are present in the application:
