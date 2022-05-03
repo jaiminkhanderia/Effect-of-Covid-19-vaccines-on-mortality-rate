@@ -83,7 +83,7 @@ def get_all_vaccine_types():
 
 def main():
     st.markdown("# Covid-19 Deaths and Vaccine Data")
-    st.write("This applications shows different visualizations for Covid-19 deaths and vaccine data")
+    st.write("This application shows different visualizations for Covid-19 deaths and vaccine data")
 
     option = st.sidebar.selectbox("Plots",
                                   options=["Introduction", "US - Cases, Deaths and Vaccines",
