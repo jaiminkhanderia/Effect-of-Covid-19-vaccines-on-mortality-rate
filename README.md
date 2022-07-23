@@ -16,7 +16,7 @@ The following are the visualizations that are present in the application:
 ## Setup and Installation
 The application has been written, compiled and tested using Python 3.8 and will work on all Python 3.5+ versions. In order to get started with running the application, please follow the steps given below:
 1. Download the repository and go to the downloaded code directory
-`cd DAVH_Covid-19/code/`
+`cd Effect-of-Covid-19-vaccines-on-mortality-rate/code/`
 2. Install Python3 and pip if you don't have Python3 or pip installed on your system.
     - Download the latest Python from [https://www.python.org/downloads/](https://www.python.org/downloads/)
     - Install pip using the following command: 
